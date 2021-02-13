@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+  postgres-service:
+    image: postgres:12.0
+    command: postgres -c 'max_connections=1000'
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+      placement:
+        constraints:
+          - node.labels.postgres == true
+    env_file:
+      - env/postgres.env
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data
+    networks:
+      - postgres-db-bookrossing
+
+volumes:
+  postgres-db-data:
+
+networks:
+  postgres-db-bookrossing:
+    external: true

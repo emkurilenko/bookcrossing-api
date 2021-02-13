@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: BookcrossingAPI
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+  r2dbc:
+    password: ${POSTGRES_PASSWORD:postgres}
+    username: ${POSTGRES_USER:postgres}
+    url: r2dbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:bookcrossing_api}
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    password: ${POSTGRES_PASSWORD:postgres}
+    user: ${POSTGRES_USER:postgres}
+    url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:bookcrossing_api}
