@@ -47,7 +47,7 @@ public class DefaultBaseService<DTO extends BaseNamedEntityDTO<ID>,
 
     @Override
     public ENTITY mapToEntity(DTO value) {
-        return mapToEntity(value);
+        return mapper.mapToEntity(value);
     }
 
     @Override
