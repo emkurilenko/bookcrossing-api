@@ -1,1 +1,1 @@
-CREATE SCHEMA IF NOT EXISTS bookcrossing_api_service;
+CREATE SCHEMA IF NOT EXISTS bookcrossing_service;
