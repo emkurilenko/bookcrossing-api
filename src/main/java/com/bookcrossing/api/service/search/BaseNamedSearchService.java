@@ -12,15 +12,19 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-public class BaseNamedSearchService<DTO, ENTITY extends BaseEntity<ID>, ID> implements SearchService<BaseNamedSearch, List<DTO>> {
+import org.springframework.transaction.annotation.Transactional;
 
-    private final PredicateFactory<BaseNamedSearch> predicateFactory;
+@RequiredArgsConstructor
+public class BaseNamedSearchService<DTO, ENTITY extends BaseEntity<ID>, ID, T extends BaseNamedSearch>
+        implements SearchService<T, List<DTO>> {
+
+    private final PredicateFactory<T, ENTITY> predicateFactory;
     private final BaseCrudRepository<ENTITY, ID> repository;
     private final BaseMapper<DTO, ENTITY> mapper;
 
     @Override
-    public List<DTO> search(BaseNamedSearch searchHelper) {
+    @Transactional(readOnly = true)
+    public List<DTO> search(T searchHelper) {
         Predicate predicate = predicateFactory.create(searchHelper);
         return StreamSupportUtils.toStream(repository.findAll(predicate))
                 .map(mapper::mapToDTO)

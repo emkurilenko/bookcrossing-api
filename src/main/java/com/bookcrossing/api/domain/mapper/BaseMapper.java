@@ -1,6 +1,5 @@
 package com.bookcrossing.api.domain.mapper;
 
-import org.mapstruct.Mapper;
 import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
 

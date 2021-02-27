@@ -20,5 +20,5 @@ public class BookCrossingBaseEntity<ID extends Serializable> implements BaseEnti
     private ID id;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted = Boolean.FALSE;
 }
