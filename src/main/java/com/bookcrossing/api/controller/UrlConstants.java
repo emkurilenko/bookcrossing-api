@@ -9,5 +9,6 @@ public class UrlConstants {
     public static final String AUTHOR_MAPPING = "/author";
     public static final String GENRE_MAPPING = "/genre";
     public static final String SEARCH_MAPPING = "/search";
+    public static final String FILE_MAPPING = "/file";
     public static final String ID_MAPPING = "/{id}";
 }
