@@ -1,5 +1,6 @@
 package com.bookcrossing.api.controller;
 
+import static com.bookcrossing.api.controller.UrlConstants.FETCH_FILE_MAPPING;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import com.bookcrossing.api.domain.dto.BaseEntityDTO;
@@ -44,7 +45,7 @@ public class FileController {
                 .map(BaseEntityDTO::getId);
     }
 
-    @GetMapping("/{id}/fetch")
+    @GetMapping(FETCH_FILE_MAPPING)
     public Mono<ResponseEntity<byte[]>> fetchFile(
             @PathVariable UUID id,
             @RequestParam(required = false) boolean needDownload) {

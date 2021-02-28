@@ -7,12 +7,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @EqualsAndHashCode(callSuper = true)
@@ -42,5 +44,13 @@ public class Book extends BaseNamedEntity<Long> {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authors;
+
+    @OneToMany
+    @JoinTable(
+            name = "book_file",
+            schema = "bookcrossing_service",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id"))
+    private List<File> pictures = new ArrayList<>();
 
 }

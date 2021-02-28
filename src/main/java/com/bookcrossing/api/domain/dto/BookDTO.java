@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -18,4 +19,6 @@ public class BookDTO extends BaseNamedEntityDTO<Long> {
     private List<AuthorDTO> authors;
 
     private List<GenreDTO> genres;
+
+    private List<UUID> pictures;
 }

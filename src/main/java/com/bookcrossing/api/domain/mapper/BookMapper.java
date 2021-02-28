@@ -9,7 +9,7 @@ import com.bookcrossing.api.domain.entity.Book;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-        uses = {AuthorMapper.class, GenreMapper.class},
+        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class},
         unmappedTargetPolicy = IGNORE,
         nullValueMappingStrategy = RETURN_DEFAULT)
 public interface BookMapper extends BaseMapper<BookDTO, Book> {
