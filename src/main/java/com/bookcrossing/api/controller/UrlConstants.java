@@ -12,7 +12,6 @@ public class UrlConstants {
     public static final String FILE_MAPPING = "/file";
     public static final String ID_MAPPING = "/{id}";
     public static final String FETCH_FILE_MAPPING = "/{id}/fetch";
-
-
+    public static final String BOOK_BOOK_ID_LOCATION_MAPPING = "/book/{bookId}/location";
 
 }

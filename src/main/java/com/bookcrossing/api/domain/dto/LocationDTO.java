@@ -1,26 +1,24 @@
 package com.bookcrossing.api.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+@Data
 @NoArgsConstructor
-public class BookDTO extends BaseNamedEntityDTO<Long> {
+public class LocationDTO extends BaseEntityDTO<Long> {
 
-    private String code;
-
-    private List<AuthorDTO> authors;
-
-    private List<GenreDTO> genres;
-
+    private BigDecimal latitude;
+    private BigDecimal longitude;
     private List<UUID> pictures;
-
-    private LocationDTO location;
+    @JsonIgnore
+    private Long bookId;
 }
