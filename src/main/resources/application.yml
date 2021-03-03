@@ -4,8 +4,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
-    password: ${POSTGRES_PASSWORD:postgres}
-    username: ${POSTGRES_USER:postgres}
-    url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:bookcrossing_api}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    url: jdbc:postgresql://${SPRING_DATASOURCE_URL:localhost:5432}/${POSTGRES_DB_NAME:bookcrossing_api}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
