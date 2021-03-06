@@ -5,7 +5,7 @@ import static com.bookcrossing.api.controller.UrlConstants.AUTHOR_MAPPING;
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
 import com.bookcrossing.api.service.search.SearchService;
-import com.bookcrossing.api.service.wrapper.ReactiveBaseServiceWrapper;
+import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class AuthorController extends AbstractBaseController<AuthorDTO, Long, Ba
 
     @Autowired
     public AuthorController(
-            final ReactiveBaseServiceWrapper<AuthorDTO, Long> baseServiceWrapper,
+            final BaseServiceWrapper<AuthorDTO, Long> baseServiceWrapper,
             final SearchService<BaseNamedSearch, List<AuthorDTO>> searchService) {
         super(baseServiceWrapper, searchService);
     }

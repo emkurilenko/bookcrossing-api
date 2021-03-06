@@ -3,31 +3,26 @@ package com.bookcrossing.api.utils;
 import static java.util.Optional.ofNullable;
 
 import com.bookcrossing.api.domain.dto.FileDTO;
-import reactor.core.publisher.Mono;
+import com.google.common.io.ByteStreams;
 
-import java.util.Objects;
+import java.io.IOException;
 
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileUtils {
 
-    public Mono<FileDTO> convert(Mono<FilePart> file) {
-        return file.flatMap(part ->
-                part.content()
-                        .reduce(DataBuffer::write)
-                        .map(DataBuffer::asInputStream)
-                        .flatMap(is -> Mono.fromCallable(is::readAllBytes))
-                        .map(bytes ->
-                                FileDTO.builder()
-                                        .content(bytes)
-                                        .name(part.filename())
-                                        .contentType(convertContentType(part.headers()))
-                                        .build()));
+    public FileDTO convert(MultipartFile file) throws IOException {
+        byte[] content = ByteStreams.toByteArray(file.getInputStream());
+
+        return FileDTO.builder()
+                .name(file.getOriginalFilename())
+                .contentType(file.getContentType())
+                .content(content)
+                .build();
     }
 
     private String convertContentType(HttpHeaders headers) {

@@ -5,7 +5,7 @@ import static com.bookcrossing.api.controller.UrlConstants.GENRE_MAPPING;
 import com.bookcrossing.api.domain.dto.GenreDTO;
 import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
 import com.bookcrossing.api.service.search.SearchService;
-import com.bookcrossing.api.service.wrapper.ReactiveBaseServiceWrapper;
+import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class GenreController extends AbstractBaseController<GenreDTO, Long, Base
 
     @Autowired
     public GenreController(
-            final ReactiveBaseServiceWrapper<GenreDTO, Long> baseServiceWrapper,
+            final BaseServiceWrapper<GenreDTO, Long> baseServiceWrapper,
             final SearchService<BaseNamedSearch, List<GenreDTO>> searchService) {
         super(baseServiceWrapper, searchService);
     }

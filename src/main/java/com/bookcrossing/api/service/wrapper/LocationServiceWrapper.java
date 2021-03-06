@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocationReactiveServiceWrapper extends BaseReactiveBaseServiceWrapper<LocationDTO, Location, Long> {
+public class LocationServiceWrapper extends BaseBaseServiceWrapper<LocationDTO, Location, Long> {
 
     @Autowired
-    public LocationReactiveServiceWrapper(BaseService<LocationDTO, Location, Long> service) {
+    public LocationServiceWrapper(BaseService<LocationDTO, Location, Long> service) {
         super(service);
     }
 }

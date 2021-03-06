@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GenreReactiveServiceWrapper extends BaseReactiveBaseServiceWrapper<GenreDTO, Genre, Long> {
+public class GenreServiceWrapper extends BaseBaseServiceWrapper<GenreDTO, Genre, Long> {
     @Autowired
-    public GenreReactiveServiceWrapper(BaseService<GenreDTO, Genre, Long> service) {
+    public GenreServiceWrapper(BaseService<GenreDTO, Genre, Long> service) {
         super(service);
     }
 }

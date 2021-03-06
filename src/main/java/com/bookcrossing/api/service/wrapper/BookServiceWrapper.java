@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookReactiveServiceWrapper extends BaseReactiveBaseServiceWrapper<BookDTO, Book, Long> {
+public class BookServiceWrapper extends BaseBaseServiceWrapper<BookDTO, Book, Long> {
 
     @Autowired
-    public BookReactiveServiceWrapper(BaseService<BookDTO, Book, Long> service) {
+    public BookServiceWrapper(BaseService<BookDTO, Book, Long> service) {
         super(service);
     }
 }

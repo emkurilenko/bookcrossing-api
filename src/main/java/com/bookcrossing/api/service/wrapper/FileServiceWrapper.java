@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FileReactiveServiceWrapper extends BaseReactiveBaseServiceWrapper<FileDTO, File, UUID> {
+public class FileServiceWrapper extends BaseBaseServiceWrapper<FileDTO, File, UUID> {
 
     @Autowired
-    public FileReactiveServiceWrapper(BaseService<FileDTO, File, UUID> service) {
+    public FileServiceWrapper(BaseService<FileDTO, File, UUID> service) {
         super(service);
     }
 }

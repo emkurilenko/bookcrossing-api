@@ -3,10 +3,9 @@ package com.bookcrossing.api.controller;
 import static com.bookcrossing.api.controller.UrlConstants.BOOK_MAPPING;
 
 import com.bookcrossing.api.domain.dto.BookDTO;
-import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.service.search.SearchService;
-import com.bookcrossing.api.service.wrapper.ReactiveBaseServiceWrapper;
+import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class BookController extends AbstractBaseController<BookDTO, Long, BookSe
 
     @Autowired
     public BookController(
-            final ReactiveBaseServiceWrapper<BookDTO, Long> baseServiceWrapper,
+            final BaseServiceWrapper<BookDTO, Long> baseServiceWrapper,
             final SearchService<BookSearch, List<BookDTO>> searchService) {
         super(baseServiceWrapper, searchService);
     }

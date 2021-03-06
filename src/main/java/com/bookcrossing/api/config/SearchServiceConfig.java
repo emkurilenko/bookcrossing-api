@@ -20,6 +20,7 @@ import com.bookcrossing.api.service.search.factory.PredicateFactory;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,6 +38,7 @@ public class SearchServiceConfig {
     private final GenreMapper genreMapper;
     private final BookMapper bookMapper;
 
+    @Autowired
     public SearchServiceConfig(
             final PredicateFactory<BaseNamedSearch, Genre> genrePredicateFactory,
             final PredicateFactory<BaseNamedSearch, Author> authorPredicateFactory,
