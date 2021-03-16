@@ -24,4 +24,15 @@ public class ValidationException extends RuntimeException {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
     }
+
+    public ValidationException(
+            String message,
+            String resourceName,
+            String fieldName,
+            Object fieldValue) {
+        super(message);
+        this.resourceName = resourceName;
+        this.fieldName = fieldName;
+        this.fieldValue = fieldValue;
+    }
 }

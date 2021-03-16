@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,12 +18,17 @@ import javax.persistence.Table;
 @Table(name = "book_reservation_history", schema = "bookcrossing_service")
 public class BookReservationHistory extends BookCrossingBaseEntity<Long> {
 
-    private ZonedDateTime creationDate;
+    private ZonedDateTime createdDate;
+
+    private ZonedDateTime expiredAt;
 
     @OneToOne
     private User user;
 
     @OneToOne
     private Book book;
+
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;
 
 }

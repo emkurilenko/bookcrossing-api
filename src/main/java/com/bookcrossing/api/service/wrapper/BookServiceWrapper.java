@@ -1,6 +1,6 @@
 package com.bookcrossing.api.service.wrapper;
 
-import com.bookcrossing.api.domain.dto.BookDTO;
+import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.entity.Book;
 import com.bookcrossing.api.service.BaseService;
 

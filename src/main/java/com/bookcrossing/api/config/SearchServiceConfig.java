@@ -1,7 +1,7 @@
 package com.bookcrossing.api.config;
 
 import com.bookcrossing.api.domain.dto.AuthorDTO;
-import com.bookcrossing.api.domain.dto.BookDTO;
+import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.GenreDTO;
 import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
