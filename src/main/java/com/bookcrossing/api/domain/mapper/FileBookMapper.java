@@ -28,4 +28,14 @@ public interface FileBookMapper {
                 .collect(Collectors.toList());
 
     }
+
+    default File mapFile(UUID id) {
+        File file = new File();
+        file.setId(id);
+        return file;
+    }
+
+    default UUID mapId(File file) {
+        return file.getId();
+    }
 }

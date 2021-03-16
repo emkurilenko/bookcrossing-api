@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(BOOK_MAPPING)
-public class BookController extends AbstractBaseController<BookDTO, Long, BookSearch> {
+public class BookController extends AbstractSearchController<BookDTO, Long, BookSearch> {
 
     @Autowired
     public BookController(

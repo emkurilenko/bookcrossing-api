@@ -1,4 +1,4 @@
-package com.bookcrossing.api.service;
+package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.LocationDTO;
 import com.bookcrossing.api.domain.entity.Location;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocationService extends DefaultBaseService<LocationDTO, Location, Long> {
+public class LocationServiceImpl extends DefaultBaseService<LocationDTO, Location, Long> {
 
     @Autowired
-    public LocationService(
+    public LocationServiceImpl(
             final BaseMapper<LocationDTO, Location> mapper,
             final BaseCrudRepository<Location, Long> repository) {
         super(mapper, repository);

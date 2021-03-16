@@ -3,6 +3,7 @@ package com.bookcrossing.api.controller;
 import static com.bookcrossing.api.controller.UrlConstants.FETCH_FILE_MAPPING;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
+import com.bookcrossing.api.domain.dto.BaseEntityDTO;
 import com.bookcrossing.api.domain.dto.FileDTO;
 import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 import com.bookcrossing.api.utils.FileUtils;
@@ -39,10 +40,12 @@ public class FileController {
 
     @SneakyThrows
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-    public UUID uploadFile(@RequestPart("file") MultipartFile file) {
+    public BaseEntityDTO<UUID> uploadFile(@RequestPart("file") MultipartFile file) {
         FileDTO value = fileUtils.convert(file);
         FileDTO persistFile = fileBaseService.persist(value);
-        return persistFile.getId();
+        BaseEntityDTO<UUID> baseEntityDTO = new BaseEntityDTO<>();
+        baseEntityDTO.setId(persistFile.getId());
+        return baseEntityDTO;
     }
 
     @GetMapping(FETCH_FILE_MAPPING)

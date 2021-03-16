@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(AUTHOR_MAPPING)
-public class AuthorController extends AbstractBaseController<AuthorDTO, Long, BaseNamedSearch> {
+public class AuthorController extends AbstractSearchController<AuthorDTO, Long, BaseNamedSearch> {
 
     @Autowired
     public AuthorController(

@@ -1,4 +1,4 @@
-package com.bookcrossing.api.service;
+package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.dto.BookDTO;
@@ -8,6 +8,7 @@ import com.bookcrossing.api.domain.entity.Book;
 import com.bookcrossing.api.domain.entity.Genre;
 import com.bookcrossing.api.domain.mapper.BaseMapper;
 import com.bookcrossing.api.domain.repository.BaseCrudRepository;
+import com.bookcrossing.api.service.BaseService;
 
 import java.util.List;
 import java.util.stream.Collectors;

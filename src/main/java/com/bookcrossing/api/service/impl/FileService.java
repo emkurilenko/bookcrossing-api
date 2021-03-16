@@ -1,4 +1,4 @@
-package com.bookcrossing.api.service;
+package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.FileDTO;
 import com.bookcrossing.api.domain.entity.File;

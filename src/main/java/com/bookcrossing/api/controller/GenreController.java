@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(GENRE_MAPPING)
-public class GenreController extends AbstractBaseController<GenreDTO, Long, BaseNamedSearch> {
+public class GenreController extends AbstractSearchController<GenreDTO, Long, BaseNamedSearch> {
 
     @Autowired
     public GenreController(

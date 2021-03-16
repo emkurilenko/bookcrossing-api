@@ -1,4 +1,4 @@
-package com.bookcrossing.api.service;
+package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.entity.Author;
