@@ -1,0 +1,3 @@
+tasks:
+  cron:
+    reserverion-book-checker: '0 */5 * ? * *'
