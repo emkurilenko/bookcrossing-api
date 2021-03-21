@@ -18,6 +18,7 @@ public class LocationDTO extends BaseEntityDTO<Long> {
 
     private BigDecimal latitude;
     private BigDecimal longitude;
+    private String address;
     private List<UUID> pictures;
     @JsonIgnore
     private Long bookId;

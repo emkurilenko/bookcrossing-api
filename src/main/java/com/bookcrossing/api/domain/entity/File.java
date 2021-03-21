@@ -24,6 +24,8 @@ import org.hibernate.annotations.Type;
 @Table(name = "file", schema = "bookcrossing_service")
 public class File extends BaseNamedEntity<UUID> {
 
+
+
     @Column(name = "content_type")
     private String contentType;
 

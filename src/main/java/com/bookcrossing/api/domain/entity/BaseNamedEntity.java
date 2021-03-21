@@ -1,5 +1,6 @@
 package com.bookcrossing.api.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
 public class BaseNamedEntity<ID extends Serializable> extends BookCrossingBaseEntity<ID> {

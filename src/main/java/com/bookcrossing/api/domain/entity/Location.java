@@ -29,6 +29,9 @@ public class Location extends BookCrossingBaseEntity<Long> {
     @Column(name = "longitude")
     private BigDecimal longitude;
 
+    @Column(name = "address")
+    private String address;
+
     @OneToOne
     @JoinColumn(name = "book_id")
     private Book book;
