@@ -2,5 +2,6 @@ package com.bookcrossing.api.validator;
 
 public enum ValidatorType {
     UNIQUE_USER,
-    BOOK_RESERVATION
+    BOOK_BOOKING,
+    BOOK_CODE
 }

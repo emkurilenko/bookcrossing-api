@@ -1,9 +1,9 @@
 package com.bookcrossing.api.validator;
 
-import static com.bookcrossing.api.validator.ValidatorType.BOOK_RESERVATION;
+import static com.bookcrossing.api.validator.ValidatorType.BOOK_BOOKING;
 
 import com.bookcrossing.api.domain.entity.BookStatus;
-import com.bookcrossing.api.domain.repository.BookReservationHistoryRepository;
+import com.bookcrossing.api.domain.repository.BookBookingHistoryRepository;
 import com.bookcrossing.api.exception.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookReservationValidator implements Validator<Long> {
 
-    private final BookReservationHistoryRepository bookReservationHistoryRepository;
+    private final BookBookingHistoryRepository bookReservationHistoryRepository;
 
     @Autowired
-    public BookReservationValidator(BookReservationHistoryRepository bookReservationHistoryRepository) {
+    public BookReservationValidator(BookBookingHistoryRepository bookReservationHistoryRepository) {
         this.bookReservationHistoryRepository = bookReservationHistoryRepository;
     }
 
@@ -23,7 +23,7 @@ public class BookReservationValidator implements Validator<Long> {
     public void validate(Long value) {
         boolean isBookReserve = bookReservationHistoryRepository.existsByBookIdAndStatus(
                 value,
-                BookStatus.RESERVATION);
+                BookStatus.BOOKED);
 
         if (isBookReserve) {
             throw new ValidationException("book.reserve", "book", "book_id", value);
@@ -32,6 +32,6 @@ public class BookReservationValidator implements Validator<Long> {
 
     @Override
     public ValidatorType type() {
-        return BOOK_RESERVATION;
+        return BOOK_BOOKING;
     }
 }

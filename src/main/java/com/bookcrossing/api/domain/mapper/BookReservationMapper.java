@@ -1,7 +1,7 @@
 package com.bookcrossing.api.domain.mapper;
 
-import com.bookcrossing.api.domain.dto.BookReservationHistoryDTO;
-import com.bookcrossing.api.domain.dto.book.BookReservationDTO;
+import com.bookcrossing.api.domain.dto.BookBookedHistoryDTO;
+import com.bookcrossing.api.domain.dto.book.BookBookingDTO;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,5 +10,5 @@ import org.mapstruct.Mapping;
 public interface BookReservationMapper {
 
     @Mapping(target = "bookId", source = "dto.book.id")
-    BookReservationDTO mapToDTO(BookReservationHistoryDTO dto);
+    BookBookingDTO mapToDTO(BookBookedHistoryDTO dto);
 }

@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class BookReservationDTO extends BaseEntityDTO<Long> {
+public class BookBookingDTO extends BaseEntityDTO<Long> {
 
     private Long bookId;
     private ZonedDateTime createdDate;

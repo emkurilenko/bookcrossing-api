@@ -1,5 +1,7 @@
 package com.bookcrossing.api.domain.mapper;
 
+import static java.util.Optional.ofNullable;
+
 import com.bookcrossing.api.domain.entity.BookCrossingBaseEntity;
 import com.bookcrossing.api.domain.entity.File;
 
@@ -30,12 +32,19 @@ public interface FileBookMapper {
     }
 
     default File mapFile(UUID id) {
-        File file = new File();
-        file.setId(id);
-        return file;
+        return ofNullable(id)
+                .map(item -> {
+                    File file = new File();
+                    file.setId(item);
+                    return file;
+                })
+                .orElse(null);
+
     }
 
     default UUID mapId(File file) {
-        return file.getId();
+        return ofNullable(file)
+                .map(BookCrossingBaseEntity::getId)
+                .orElse(null);
     }
 }

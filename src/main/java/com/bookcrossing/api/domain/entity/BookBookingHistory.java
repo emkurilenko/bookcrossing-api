@@ -5,9 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "book_reservation_history", schema = "bookcrossing_service")
-public class BookReservationHistory extends BookCrossingBaseEntity<Long> {
+public class BookBookingHistory extends BookCrossingBaseEntity<Long> {
 
     private ZonedDateTime createdDate;
 
@@ -30,5 +32,9 @@ public class BookReservationHistory extends BookCrossingBaseEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     private BookStatus status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_history_id")
+    private BookHistory history;
 
 }

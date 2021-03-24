@@ -2,7 +2,9 @@ package com.bookcrossing.api.service.search.factory;
 
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.domain.entity.Book;
+import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.domain.entity.QBook;
+import com.bookcrossing.api.domain.entity.QBookHistory;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
@@ -12,7 +14,8 @@ import org.springframework.util.StringUtils;
 @Component
 public class BookPredicateFactory implements PredicateFactory<BookSearch, Book> {
 
-    private static final QBook QB =QBook.book;
+    private static final QBook QB = QBook.book;
+    private static final QBookHistory QBH = QBookHistory.bookHistory;
 
     @Override
     public Predicate create(BookSearch search) {
@@ -29,6 +32,8 @@ public class BookPredicateFactory implements PredicateFactory<BookSearch, Book> 
         if (StringUtils.hasText(genre)) {
             bb.and(QB.genres.any().name.containsIgnoreCase(genre));
         }
+
+        bb.and(QB.bookHistories.any().status.eq(BookStatus.AVAILABLE));
         return bb;
     }
 }

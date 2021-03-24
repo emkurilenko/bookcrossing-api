@@ -2,16 +2,16 @@ package com.bookcrossing.api.job;
 
 import static com.bookcrossing.api.job.JobType.RESERVATION_STATUS_CHECKER;
 
-import com.bookcrossing.api.domain.entity.BookReservationHistory;
+import com.bookcrossing.api.domain.entity.BookBookingHistory;
 import com.bookcrossing.api.domain.entity.BookStatus;
-import com.bookcrossing.api.domain.entity.QBookReservationHistory;
-import com.bookcrossing.api.domain.repository.BookReservationHistoryRepository;
+import com.bookcrossing.api.domain.entity.QBookBookingHistory;
+import com.bookcrossing.api.domain.repository.BookBookingHistoryRepository;
 import com.bookcrossing.api.service.BaseTaskService;
+import com.bookcrossing.api.service.BookBookingHistoryService;
 import com.bookcrossing.api.utils.StreamSupportUtils;
 import com.querydsl.core.BooleanBuilder;
 
 import java.time.ZonedDateTime;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,16 +20,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReservationStatusCheckerJob extends DefaultJob {
 
-    private static final QBookReservationHistory QBRH = QBookReservationHistory.bookReservationHistory;
+    private static final QBookBookingHistory QBBH = QBookBookingHistory.bookBookingHistory;
 
-    private final BookReservationHistoryRepository repository;
+    private final BookBookingHistoryRepository repository;
+    private final BookBookingHistoryService reservedBookHistoryService;
 
     @Autowired
     public ReservationStatusCheckerJob(
             final BaseTaskService baseTaskService,
-            final BookReservationHistoryRepository bookReservationHistoryRepository) {
+            final BookBookingHistoryRepository bookReservationHistoryRepository,
+            final BookBookingHistoryService reservedBookHistoryService) {
         super(baseTaskService);
         this.repository = bookReservationHistoryRepository;
+        this.reservedBookHistoryService = reservedBookHistoryService;
     }
 
     @Override
@@ -40,24 +43,18 @@ public class ReservationStatusCheckerJob extends DefaultJob {
 
     @Override
     public boolean toExecute() {
-        BooleanBuilder bb = new BooleanBuilder(QBRH.status.eq(BookStatus.RESERVATION)
-                .and(QBRH.isDeleted.eq(Boolean.FALSE))
-                .and(QBRH.expiredAt.loe(ZonedDateTime.now())));
+        BooleanBuilder bb = new BooleanBuilder(QBBH.status.eq(BookStatus.BOOKED)
+                .and(QBBH.isDeleted.eq(Boolean.FALSE))
+                .and(QBBH.expiredAt.loe(ZonedDateTime.now())));
 
-        Iterable<BookReservationHistory> all = repository.findAll(bb);
+        Iterable<BookBookingHistory> all = repository.findAll(bb);
 
         StreamSupportUtils.toStream(all)
-                .map(this::process)
-                .map(repository::saveAndFlush)
-                .collect(Collectors.toList());
-
+                .forEach(item ->
+                        reservedBookHistoryService.cancelReservingBook(
+                                item.getBook().getId(),
+                                item.getUser().getId()));
         return true;
-    }
-
-    private BookReservationHistory process(BookReservationHistory item) {
-        item.setIsDeleted(Boolean.TRUE);
-        item.setStatus(BookStatus.CANCELED);
-        return item;
     }
 
     @Override

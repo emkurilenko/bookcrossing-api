@@ -2,8 +2,10 @@ package com.bookcrossing.api.domain.dto.book;
 
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.dto.BaseNamedEntityDTO;
+import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.GenreDTO;
 import com.bookcrossing.api.domain.dto.LocationDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,4 +29,7 @@ public class BookDTO extends BaseNamedEntityDTO<Long> {
     private List<UUID> pictures;
 
     private LocationDTO location;
+
+    @JsonIgnore
+    private List<BookHistoryDTO> bookHistories;
 }

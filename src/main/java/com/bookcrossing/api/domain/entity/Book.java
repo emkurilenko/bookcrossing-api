@@ -57,4 +57,12 @@ public class Book extends BaseNamedEntity<Long> {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
     private Location location;
 
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "book")
+//    @JoinTable(
+//            name = "book_history",
+//            schema = "bookcrossing_service",
+//            joinColumns = @JoinColumn(name = "book_id"),
+//            inverseJoinColumns = @JoinColumn(name = "id"))
+    private List<BookHistory> bookHistories;
+
 }
