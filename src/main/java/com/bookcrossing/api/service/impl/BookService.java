@@ -1,5 +1,7 @@
 package com.bookcrossing.api.service.impl;
 
+import static java.util.Optional.ofNullable;
+
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.LocationDTO;
@@ -16,6 +18,8 @@ import com.bookcrossing.api.service.BookHistoryService;
 import com.bookcrossing.api.service.LocationService;
 
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -57,6 +61,10 @@ public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
             value.setLocation(location);
         }
 
+        if (value.getCode() == null) {
+            value.setCode(generateUniqueCode());
+        }
+
         List<AuthorDTO> authorDTOS = value.getAuthors()
                 .stream()
                 .map(authorBaseService::persist)
@@ -76,5 +84,19 @@ public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
         locationService.persist(location);
 
         return persist;
+    }
+
+    //TODO check_it
+    private String generateUniqueCode() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            UUID uuid2 = UUID.randomUUID();
+            int abs = Math.abs(uuid2.hashCode());
+            String temp = String.valueOf(abs).substring(2, 5);
+            stringBuilder.append(temp).append("-");
+        }
+        stringBuilder.append(new Random().nextInt(999));
+        return stringBuilder.toString();
+
     }
 }

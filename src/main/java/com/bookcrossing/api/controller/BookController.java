@@ -2,10 +2,11 @@ package com.bookcrossing.api.controller;
 
 import static com.bookcrossing.api.controller.UrlConstants.BOOK_ID_BOOKING_MAPPING;
 import static com.bookcrossing.api.controller.UrlConstants.BOOK_MAPPING;
+import static com.bookcrossing.api.controller.UrlConstants.TAKE_AWAY_BOOK_MAPPING;
 
+import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
-import com.bookcrossing.api.domain.dto.book.BookBookingDTO;
-import com.bookcrossing.api.domain.dto.book.FetchBookDTOReq;
+import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.service.facade.BookBookingFacade;
 import com.bookcrossing.api.service.search.SearchService;
@@ -36,12 +37,12 @@ public class BookController extends AbstractSearchController<BookDTO, Long, Book
     }
 
     @PostMapping(BOOK_ID_BOOKING_MAPPING)
-    public BookBookingDTO booking(@PathVariable Long bookId) {
+    public BookHistoryDTO booking(@PathVariable Long bookId) {
         return bookBookingFacade.bookBook(bookId);
     }
 
-    @PostMapping("/fetch")
-    public BookDTO fetchBook(@RequestBody FetchBookDTOReq fetchBook) {
-        return bookBookingFacade.fetchBook(fetchBook);
+    @PostMapping(TAKE_AWAY_BOOK_MAPPING)
+    public BookHistoryDTO takeAwayBook(@RequestBody TakeAwayBookReq fetchBook) {
+        return bookBookingFacade.takeAwayBook(fetchBook);
     }
 }

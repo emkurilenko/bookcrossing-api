@@ -1,6 +1,6 @@
 package com.bookcrossing.api.validator;
 
-import com.bookcrossing.api.domain.dto.book.FetchBookDTOReq;
+import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.entity.Book;
 import com.bookcrossing.api.domain.repository.BookRepository;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookCodeValidator implements Validator<FetchBookDTOReq> {
+public class BookCodeValidator implements Validator<TakeAwayBookReq> {
 
     private final BookRepository bookRepository;
 
@@ -18,7 +18,7 @@ public class BookCodeValidator implements Validator<FetchBookDTOReq> {
     }
 
     @Override
-    public void validate(FetchBookDTOReq value) {
+    public void validate(TakeAwayBookReq value) {
         Book book = bookRepository.findById(value.getBookId())
                 .orElseThrow(() -> new IllegalArgumentException("book.not.found"));//TODO throw NotFoundException
 

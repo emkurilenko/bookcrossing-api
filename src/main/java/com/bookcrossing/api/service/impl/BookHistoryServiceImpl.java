@@ -15,7 +15,6 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +84,12 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
 
         BookHistory bookedBook = bookHistoryRepository.findOne(QBH.book.id.eq(book.getId())
                 .and(QBH.status.eq(BookStatus.RESERVED)))
-                .orElseThrow(() -> new IllegalStateException("not.found.booked.book"));
+                .orElseThrow(() -> new IllegalStateException("not.found.reserved.book"));
 
         bookedBook.setStatus(BookStatus.AVAILABLE);
 
         bookHistoryRepository.save(bookedBook);
         return persist(history);
-
     }
 
     @Override

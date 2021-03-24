@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FetchBookDTOReq {
+public class TakeAwayBookReq {
     private Long bookId;
     private String code;
     @JsonIgnore
