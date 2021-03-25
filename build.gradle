@@ -60,6 +60,8 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.4'
+
     compile('com.querydsl:querydsl-core:4.4.0')
     compile('com.querydsl:querydsl-jpa:4.4.0')
     compile('com.querydsl:querydsl-apt:4.4.0:jpa')
