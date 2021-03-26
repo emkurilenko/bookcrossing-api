@@ -12,10 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public class BookPredicateFactory implements PredicateFactory<BookSearch, Book> {
+public class BookPredicateFactory implements PredicateFactory<BookSearch> {
 
     private static final QBook QB = QBook.book;
-    private static final QBookHistory QBH = QBookHistory.bookHistory;
 
     @Override
     public Predicate create(BookSearch search) {

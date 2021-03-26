@@ -2,7 +2,10 @@ package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.BookUserHistoryDTO;
+import com.bookcrossing.api.domain.dto.UserDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
+import com.bookcrossing.api.domain.dto.search.BookSearch;
+import com.bookcrossing.api.domain.dto.search.UserHistorySearch;
 import com.bookcrossing.api.domain.entity.BookHistory;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.domain.entity.QBookHistory;
@@ -10,6 +13,8 @@ import com.bookcrossing.api.domain.mapper.BaseMapper;
 import com.bookcrossing.api.domain.mapper.BookUserHistoryMapper;
 import com.bookcrossing.api.domain.repository.BookHistoryRepository;
 import com.bookcrossing.api.service.BookHistoryService;
+import com.bookcrossing.api.service.UserService;
+import com.bookcrossing.api.service.search.SearchService;
 import com.bookcrossing.api.utils.StreamSupportUtils;
 import com.querydsl.core.BooleanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -28,17 +33,23 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
 
     private static final QBookHistory QBH = QBookHistory.bookHistory;
 
+    private final UserService userService;
     private final BookHistoryRepository bookHistoryRepository;
     private final BookUserHistoryMapper bookUserHistoryMapper;
+    private final SearchService<UserHistorySearch, List<BookHistoryDTO>> userHistorySearchSearchService;
 
     @Autowired
     public BookHistoryServiceImpl(
             final BaseMapper<BookHistoryDTO, BookHistory> mapper,
+            final UserService userService,
             final BookHistoryRepository bookHistoryRepository,
-            final BookUserHistoryMapper bookUserHistoryMapper) {
+            final BookUserHistoryMapper bookUserHistoryMapper,
+            final SearchService<UserHistorySearch, List<BookHistoryDTO>> userHistorySearchSearchService) {
         super(mapper, bookHistoryRepository);
+        this.userService = userService;
         this.bookHistoryRepository = bookHistoryRepository;
         this.bookUserHistoryMapper = bookUserHistoryMapper;
+        this.userHistorySearchSearchService = userHistorySearchSearchService;
     }
 
     @Override
@@ -100,5 +111,37 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
                         .id(item.getId())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookHistoryDTO> getUserHistory(BookSearch bookSearch) {
+        return getBookHistory(
+                bookSearch,
+                List.of(
+                        BookStatus.AVAILABLE,
+                        BookStatus.TAKE_AWAY,
+                        BookStatus.TAKEN_AWAY,
+                        BookStatus.RESERVED,
+                        BookStatus.CANCELED));
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookHistoryDTO> getUserBookedHistory(BookSearch bookSearch) {
+        return getBookHistory(bookSearch, List.of(BookStatus.BOOKED));
+    }
+
+    private List<BookHistoryDTO> getBookHistory(BookSearch bookSearch, List<BookStatus> statuses) {
+        UserDTO currentUser = userService.getCurrentUser();
+
+        UserHistorySearch userHistorySearch = UserHistorySearch.builder()
+                .bookSearch(bookSearch)
+                .user(currentUser)
+                .statuses(statuses)
+                .build();
+
+        return userHistorySearchSearchService.search(userHistorySearch);
     }
 }

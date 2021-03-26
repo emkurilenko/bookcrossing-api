@@ -1,6 +1,6 @@
 package com.bookcrossing.api.service.search;
 
-import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
+import com.bookcrossing.api.domain.dto.search.SearchHelper;
 import com.bookcrossing.api.domain.entity.BaseEntity;
 import com.bookcrossing.api.domain.mapper.BaseMapper;
 import com.bookcrossing.api.domain.repository.BaseCrudRepository;
@@ -12,13 +12,14 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-public class BaseNamedSearchService<DTO, ENTITY extends BaseEntity<ID>, ID, T extends BaseNamedSearch>
+public class BaseNamedSearchService<DTO, ENTITY extends BaseEntity<ID>, ID, T extends SearchHelper>
         implements SearchService<T, List<DTO>> {
 
-    private final PredicateFactory<T, ENTITY> predicateFactory;
+    private final PredicateFactory<T> predicateFactory;
     private final BaseCrudRepository<ENTITY, ID> repository;
     private final BaseMapper<DTO, ENTITY> mapper;
 

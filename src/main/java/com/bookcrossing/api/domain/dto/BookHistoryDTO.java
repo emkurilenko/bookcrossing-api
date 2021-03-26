@@ -2,6 +2,7 @@ package com.bookcrossing.api.domain.dto;
 
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.entity.BookStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,10 @@ import java.time.ZonedDateTime;
 public class BookHistoryDTO extends BaseEntityDTO<Long> {
 
     private ZonedDateTime createdDate;
+    @JsonIgnore
     private UserDTO user;
+
     private BookDTO book;
+
     private BookStatus status;
 }

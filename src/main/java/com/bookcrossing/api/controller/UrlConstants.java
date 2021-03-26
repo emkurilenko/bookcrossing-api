@@ -15,5 +15,7 @@ public class UrlConstants {
     public static final String BOOK_BOOK_ID_LOCATION_MAPPING = "/book/{bookId}/location";
     public static final String BOOK_ID_BOOKING_MAPPING = "/{bookId}/booking";
     public static final String TAKE_AWAY_BOOK_MAPPING = "/take-away";
+    public static final String BOOK_HISTORY_REQUEST_MAPPING = "/book/history";
+    public static final String BOOKED_REQUEST_MAPPING = "/booked";
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public class GenrePredicateFactory implements PredicateFactory<BaseNamedSearch, Genre> {
+public class GenrePredicateFactory implements PredicateFactory<BaseNamedSearch> {
     private static final QGenre QG = QGenre.genre;
 
     @Override

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public class AuthorPredicateFactory implements PredicateFactory<BaseNamedSearch, Author> {
+public class AuthorPredicateFactory implements PredicateFactory<BaseNamedSearch> {
     private static final QAuthor QA = QAuthor.author;
 
     @Override

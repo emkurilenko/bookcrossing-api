@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BaseNamedSearch {
+public class BaseNamedSearch implements SearchHelper {
 
     private String name;
 }

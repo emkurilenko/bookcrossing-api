@@ -33,7 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/user/register",
             "/file/**",
-            "/file"
+            "/file",
+            "/**/search"
     };
 
     private final DbAuthenticationProvider dbAuthenticationProvider;
@@ -49,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(WHITE_LIST)
