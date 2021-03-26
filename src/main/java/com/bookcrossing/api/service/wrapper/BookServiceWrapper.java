@@ -8,6 +8,7 @@ import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.entity.Book;
 import com.bookcrossing.api.service.BaseService;
 import com.bookcrossing.api.service.BookHistoryService;
+import com.bookcrossing.api.service.UserService;
 
 import java.time.ZonedDateTime;
 
@@ -19,28 +20,30 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookServiceWrapper extends BaseBaseServiceWrapper<BookDTO, Book, Long> {
 
     private final BookHistoryService bookHistoryService;
+    private final UserService userService;
 
     @Autowired
     public BookServiceWrapper(
             final BaseService<BookDTO, Book, Long> service,
-            final BookHistoryService bookHistoryService) {
+            final BookHistoryService bookHistoryService,
+            final UserService userService) {
         super(service);
         this.bookHistoryService = bookHistoryService;
+        this.userService = userService;
     }
 
     @Override
     @Transactional
     public BookDTO persist(BookDTO value) {
-        final Long userId = 6L; //TODO
+        final UserDTO currentUser = userService.getCurrentUser();
+
         BookDTO persistedBook = super.persist(value);
         BookHistoryDTO bookHistory = bookHistoryService.findByBookIdAndUserId(
-                persistedBook.getId(), userId);
+                persistedBook.getId(), currentUser.getId());
         if (bookHistory == null) {
             bookHistory = BookHistoryDTO.builder()
                     .book(persistedBook)
-                    .user(UserDTO.builder()
-                            .id(userId)
-                            .build())
+                    .user(currentUser)
                     .status(AVAILABLE)
                     .createdDate(ZonedDateTime.now())
                     .build();

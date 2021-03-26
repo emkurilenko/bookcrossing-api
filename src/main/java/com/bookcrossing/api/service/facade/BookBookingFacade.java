@@ -5,7 +5,6 @@ import static com.bookcrossing.api.domain.entity.BookStatus.RESERVED;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKEN_AWAY;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKE_AWAY;
 
-import com.bookcrossing.api.config.ApplicationSetting;
 import com.bookcrossing.api.config.dispatcher.Dispatcher;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.UserDTO;
@@ -13,6 +12,7 @@ import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.service.BookHistoryService;
+import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.validator.Validator;
 import com.bookcrossing.api.validator.ValidatorType;
 
@@ -28,13 +28,16 @@ public class BookBookingFacade {
 
     private final Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher;
     private final BookHistoryService bookHistoryService;
+    private final UserService userService;
 
     @Autowired
     public BookBookingFacade(
             Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher,
-            BookHistoryService bookHistoryService) {
+            BookHistoryService bookHistoryService,
+            UserService userService) {
         this.validatorDispatcher = validatorDispatcher;
         this.bookHistoryService = bookHistoryService;
+        this.userService = userService;
     }
 
     @Transactional
@@ -48,9 +51,7 @@ public class BookBookingFacade {
         }
 
         BookDTO bookDTO = availableBook.getBook();
-        UserDTO userDTO = UserDTO.builder()
-                .id(49L) //todo get from context
-                .build();
+        UserDTO userDTO = userService.getCurrentUser();
 
         ZonedDateTime createdDate = ZonedDateTime.now();
 
@@ -73,10 +74,7 @@ public class BookBookingFacade {
         validatorDispatcher.getByName(ValidatorType.BOOK_CODE)
                 .validate(takeAwayBookReq);
 
-        //TODO get from context
-        UserDTO userDTO = UserDTO.builder()
-                .id(takeAwayBookReq.getUserId())
-                .build();
+        UserDTO userDTO = userService.getCurrentUser();
         Long bookId = takeAwayBookReq.getBookId();
 
         BookHistoryDTO availableOrReservedHistory = bookHistoryService.findByBookIdAndStatuses(
