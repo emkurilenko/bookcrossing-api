@@ -28,16 +28,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
 
-    private final BaseService<AuthorDTO, Author, Long> authorBaseService;
-    private final BaseService<GenreDTO, Genre, Long> genreBaseService;
+    private final BaseService<AuthorDTO, Long> authorBaseService;
+    private final BaseService<GenreDTO, Long> genreBaseService;
     private final LocationService locationService;
     private final BookHistoryService bookHistoryService;
 
     public BookService(
             final BaseMapper<BookDTO, Book> mapper,
             final BaseCrudRepository<Book, Long> repository,
-            final BaseService<AuthorDTO, Author, Long> authorBaseService,
-            final BaseService<GenreDTO, Genre, Long> genreBaseService,
+            final BaseService<AuthorDTO, Long> authorBaseService,
+            final BaseService<GenreDTO, Long> genreBaseService,
             final LocationService locationService,
             final BookHistoryService bookHistoryService) {
         super(mapper, repository);
@@ -55,10 +55,10 @@ public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
             List<BookHistoryDTO> bookHistoryDTOS = bookHistoryService.findByBookId(value.getId());
             value.setBookHistories(bookHistoryDTOS);
 
-            LocationDTO locationDTO = locationService.findByBookId(value.getId());
-            LocationDTO location = value.getLocation();
-            location.setId(locationDTO.getId());
-            value.setLocation(location);
+//            LocationDTO locationDTO = locationService.findById(value.getId());
+//            LocationDTO location = value.getLocation();
+//            location.setId(locationDTO.getId());
+//            value.setLocation(location);
         }
 
         if (value.getCode() == null) {
@@ -77,11 +77,6 @@ public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
         value.setGenres(genreDTOS);
 
         BookDTO persist = super.persist(value);
-
-        LocationDTO location = persist.getLocation();
-        location.setBookId(persist.getId());
-
-        locationService.persist(location);
 
         return persist;
     }

@@ -8,7 +8,7 @@ import com.bookcrossing.api.domain.entity.BookStatus;
 
 import java.util.List;
 
-public interface BookHistoryService extends BaseService<BookHistoryDTO, BookHistory, Long> {
+public interface BookHistoryService extends BaseService<BookHistoryDTO, Long> {
 
     List<BookUserHistoryDTO> findByUserId(Long userId);
 

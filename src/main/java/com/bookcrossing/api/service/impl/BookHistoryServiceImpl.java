@@ -33,6 +33,7 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
 
     private static final QBookHistory QBH = QBookHistory.bookHistory;
 
+    private final BaseMapper<BookHistoryDTO, BookHistory> mapper;
     private final UserService userService;
     private final BookHistoryRepository bookHistoryRepository;
     private final BookUserHistoryMapper bookUserHistoryMapper;
@@ -46,6 +47,7 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
             final BookUserHistoryMapper bookUserHistoryMapper,
             final SearchService<UserHistorySearch, List<BookHistoryDTO>> userHistorySearchSearchService) {
         super(mapper, bookHistoryRepository);
+        this.mapper = mapper;
         this.userService = userService;
         this.bookHistoryRepository = bookHistoryRepository;
         this.bookUserHistoryMapper = bookUserHistoryMapper;
@@ -68,7 +70,7 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
     public BookHistoryDTO findByBookIdAndUserId(Long bookId, Long userId) {
         return bookHistoryRepository.findOne(QBH.user.id.eq(userId)
                 .and(QBH.book.id.eq(bookId)))
-                .map(this::mapToDto)
+                .map(mapper::mapToDTO)
                 .orElse(null);
     }
 
@@ -76,14 +78,14 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
     public BookHistoryDTO findAvailableBookByBookId(Long bookId) {
         return bookHistoryRepository.findOne(QBH.book.id.eq(bookId)
                 .and(QBH.status.eq(BookStatus.AVAILABLE)))
-                .map(this::mapToDto)
+                .map(mapper::mapToDTO)
                 .orElse(null);
     }
 
     @Override
     public BookHistoryDTO findByBookIdAndStatuses(Long bookId, List<BookStatus> statuses) {
         return bookHistoryRepository.findOne(QBH.book.id.eq(bookId).and(QBH.status.in(statuses)))
-                .map(this::mapToDto)
+                .map(mapper::mapToDTO)
                 .orElse(null);
     }
 

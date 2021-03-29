@@ -3,7 +3,7 @@ package com.bookcrossing.api.service;
 import com.bookcrossing.api.domain.dto.UserDTO;
 import com.bookcrossing.api.domain.entity.User;
 
-public interface UserService extends BaseService<UserDTO, User, Long> {
+public interface UserService extends BaseService<UserDTO, Long> {
 
     UserDTO findByLogin(String login);
 

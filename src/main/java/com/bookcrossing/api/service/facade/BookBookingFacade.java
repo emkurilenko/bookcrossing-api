@@ -79,6 +79,9 @@ public class BookBookingFacade {
 
         BookHistoryDTO availableOrReservedHistory = bookHistoryService.findByBookIdAndStatuses(
                 bookId, List.of(AVAILABLE, RESERVED));
+        if (availableOrReservedHistory == null) {
+            throw new IllegalStateException("book.is.not.available"); //TODO message and add validation
+        }
 
         availableOrReservedHistory.setStatus(TAKEN_AWAY);
 

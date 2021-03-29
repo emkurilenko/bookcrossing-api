@@ -8,16 +8,17 @@ import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
+import com.bookcrossing.api.service.BaseService;
 import com.bookcrossing.api.service.facade.BookBookingFacade;
+import com.bookcrossing.api.service.facade.BookFacade;
 import com.bookcrossing.api.service.search.SearchService;
-import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +28,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController extends AbstractSearchController<BookDTO, Long, BookSearch> {
 
     private final BookBookingFacade bookBookingFacade;
+    private final BookFacade bookFacade;
 
     @Autowired
     public BookController(
-            final BaseServiceWrapper<BookDTO, Long> baseServiceWrapper,
+            final BaseService<BookDTO, Long> bookService,
             final SearchService<BookSearch, List<BookDTO>> searchService,
-            final BookBookingFacade bookBookingFacade) {
-        super(baseServiceWrapper, searchService);
+            final BookBookingFacade bookBookingFacade,
+            final BookFacade bookFacade) {
+        super(bookService, searchService);
         this.bookBookingFacade = bookBookingFacade;
+        this.bookFacade = bookFacade;
+    }
+
+    @Override
+    @PostMapping
+    public BookDTO persist(@RequestBody BookDTO book) {
+        return bookFacade.persist(book);
     }
 
     @PostMapping(BOOK_ID_BOOKING_MAPPING)
@@ -47,8 +57,8 @@ public class BookController extends AbstractSearchController<BookDTO, Long, Book
         return bookBookingFacade.takeAwayBook(fetchBook);
     }
 
-    @PutMapping("/{bookId}/undo")
-    public BookDTO undoAvailabilityBook(@PathVariable Long bookId) {
-        return null;//TODO implement
-    }
+//    @PutMapping("/{bookId}/undo")
+//    public BookDTO undoAvailabilityBook(@PathVariable Long bookId) {
+//        return bookBookingFacade.undoAvailabilityBook(bookId);
+//    }
 }

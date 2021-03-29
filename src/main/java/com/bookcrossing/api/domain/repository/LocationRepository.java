@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocationRepository extends BaseCrudRepository<Location, Long> {
 
-    Optional<Location> findByBookId(Long bookId);
 }

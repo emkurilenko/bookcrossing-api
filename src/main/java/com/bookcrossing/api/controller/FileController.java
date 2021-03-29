@@ -5,7 +5,8 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import com.bookcrossing.api.domain.dto.BaseEntityDTO;
 import com.bookcrossing.api.domain.dto.FileDTO;
-import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
+import com.bookcrossing.api.domain.entity.File;
+import com.bookcrossing.api.service.BaseService;
 import com.bookcrossing.api.utils.FileUtils;
 import lombok.SneakyThrows;
 
@@ -27,12 +28,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(UrlConstants.FILE_MAPPING)
 public class FileController {
 
-    private final BaseServiceWrapper<FileDTO, UUID> fileBaseService;
+    private final BaseService<FileDTO, UUID> fileBaseService;
     private final FileUtils fileUtils;
 
     @Autowired
     public FileController(
-            final BaseServiceWrapper<FileDTO, UUID> fileBaseService,
+            final BaseService<FileDTO, UUID> fileBaseService,
             final FileUtils fileUtils) {
         this.fileBaseService = fileBaseService;
         this.fileUtils = fileUtils;

@@ -1,11 +1,14 @@
 package com.bookcrossing.api.service.impl;
 
+import com.bookcrossing.api.config.dispatcher.Dispatcher;
 import com.bookcrossing.api.domain.dto.UserDTO;
 import com.bookcrossing.api.domain.entity.User;
 import com.bookcrossing.api.domain.mapper.BaseMapper;
 import com.bookcrossing.api.domain.repository.UserRepository;
 import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.utils.AuthUtils;
+import com.bookcrossing.api.validator.Validator;
+import com.bookcrossing.api.validator.ValidatorType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,25 +26,30 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
 
     private static final String BASE_USER_ROLE = "USER";
 
+    private final BaseMapper<UserDTO, User> mapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthUtils authUtils;
+    private final Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher;
 
     public UserServiceImpl(
             BaseMapper<UserDTO, User> mapper,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
-            AuthUtils authUtils) {
+            AuthUtils authUtils,
+            Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher) {
         super(mapper, userRepository);
+        this.mapper = mapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authUtils = authUtils;
+        this.validatorDispatcher = validatorDispatcher;
     }
 
     @Override
     public UserDTO findByLogin(String login) {
         return userRepository.findByLogin(login)
-                .map(this::mapToDto)
+                .map(mapper::mapToDTO)
                 .orElse(null);
     }
 
@@ -64,8 +72,9 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
     }
 
     @Override
-    //todo implement validation
     public UserDTO registerNewUser(UserDTO user) {
+        validatorDispatcher.getByName(ValidatorType.UNIQUE_USER)
+                .validate(user);
         user.setRole(BASE_USER_ROLE);
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));

@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -54,7 +55,7 @@ public class Book extends BaseNamedEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "file_id"))
     private List<File> pictures = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Location location;
 
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "book")

@@ -2,21 +2,23 @@ package com.bookcrossing.api.controller;
 
 import static com.bookcrossing.api.controller.UrlConstants.SEARCH_MAPPING;
 
+import com.bookcrossing.api.domain.dto.search.SearchHelper;
+import com.bookcrossing.api.service.BaseService;
 import com.bookcrossing.api.service.search.SearchService;
-import com.bookcrossing.api.service.wrapper.BaseServiceWrapper;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
-public abstract class AbstractSearchController<DTO, ID, SEARCH> extends AbstractBaseController<DTO, ID> {
+public abstract class AbstractSearchController<DTO, ID, SEARCH extends SearchHelper> extends
+        AbstractBaseController<DTO, ID> {
 
     private final SearchService<SEARCH, List<DTO>> searchService;
 
     protected AbstractSearchController(
-            BaseServiceWrapper<DTO, ID> baseServiceWrapper,
+            BaseService<DTO, ID> baseService,
             SearchService<SEARCH, List<DTO>> searchService) {
-        super(baseServiceWrapper);
+        super(baseService);
         this.searchService = searchService;
     }
 

@@ -10,16 +10,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
-        uses = {FileBookMapper.class, BookIdMapper.class},
+        uses = {FileBookMapper.class, BookIdMapper.class, BookMapper.class},
         nullValueMappingStrategy = RETURN_DEFAULT)
 public interface LocationMapper extends BaseMapper<LocationDTO, Location> {
 
     @Override
-    @Mapping(target = "bookId", source = "location.book", qualifiedByName = "getBookId")
+    @Mapping(target = "books", ignore = true)
     LocationDTO mapToDTO(Location location);
 
     @Override
     @Mapping(target = "isDeleted", ignore = true)
-    @Mapping(target = "book", source = "bookId", qualifiedByName = "getBookById")
     Location mapToEntity(LocationDTO location);
+
 }

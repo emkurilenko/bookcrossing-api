@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -32,15 +33,6 @@ public class Location extends BookCrossingBaseEntity<Long> {
     @Column(name = "address")
     private String address;
 
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
-
-    @OneToMany
-    @JoinTable(
-            name = "location_file",
-            schema = "bookcrossing_service",
-            joinColumns = @JoinColumn(name = "location_id"),
-            inverseJoinColumns = @JoinColumn(name = "file_id"))
-    private List<File> pictures = new ArrayList<>();
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    private List<Book> books;
 }

@@ -2,19 +2,23 @@ package com.bookcrossing.api.config;
 
 import com.bookcrossing.api.domain.dto.AuthorDTO;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
+import com.bookcrossing.api.domain.dto.LocationDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.GenreDTO;
 import com.bookcrossing.api.domain.dto.search.BaseNamedSearch;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
+import com.bookcrossing.api.domain.dto.search.LocationSearch;
 import com.bookcrossing.api.domain.dto.search.UserHistorySearch;
 import com.bookcrossing.api.domain.mapper.AuthorMapper;
 import com.bookcrossing.api.domain.mapper.BookHistoryMapper;
 import com.bookcrossing.api.domain.mapper.BookMapper;
 import com.bookcrossing.api.domain.mapper.GenreMapper;
+import com.bookcrossing.api.domain.mapper.LocationMapper;
 import com.bookcrossing.api.domain.repository.AuthorRepository;
 import com.bookcrossing.api.domain.repository.BookHistoryRepository;
 import com.bookcrossing.api.domain.repository.BookRepository;
 import com.bookcrossing.api.domain.repository.GenreRepository;
+import com.bookcrossing.api.domain.repository.LocationRepository;
 import com.bookcrossing.api.service.search.BaseNamedSearchService;
 import com.bookcrossing.api.service.search.SearchService;
 import com.bookcrossing.api.service.search.factory.PredicateFactory;
@@ -60,6 +64,15 @@ public class SearchServiceConfig {
             final PredicateFactory<UserHistorySearch> predicate,
             final BookHistoryRepository repository,
             final BookHistoryMapper mapper
+    ) {
+        return new BaseNamedSearchService<>(predicate, repository, mapper);
+    }
+
+    @Bean
+    public SearchService<LocationSearch, List<LocationDTO>> locationSearchService(
+            final PredicateFactory<LocationSearch> predicate,
+            final LocationRepository repository,
+            final LocationMapper mapper
     ) {
         return new BaseNamedSearchService<>(predicate, repository, mapper);
     }

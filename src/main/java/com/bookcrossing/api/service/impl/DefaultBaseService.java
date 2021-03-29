@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DefaultBaseService<DTO extends BaseEntityDTO<ID>,
         ENTITY extends BookCrossingBaseEntity<ID>,
-        ID extends Serializable> implements BaseService<DTO, ENTITY, ID> {
+        ID extends Serializable> implements BaseService<DTO, ID> {
 
     private final BaseMapper<DTO, ENTITY> mapper;
     private final BaseCrudRepository<ENTITY, ID> repository;
@@ -24,16 +24,16 @@ public class DefaultBaseService<DTO extends BaseEntityDTO<ID>,
     @Override
     @Transactional
     public DTO persist(DTO value) {
-        ENTITY entity = mapToEntity(value);
+        ENTITY entity = mapper.mapToEntity(value);
         ENTITY persisted = repository.saveAndFlush(entity);
-        return mapToDto(persisted);
+        return mapper.mapToDTO(persisted);
     }
 
     @Override
     @Transactional(readOnly = true)
     public DTO findById(ID id) {
         return repository.findById(id)
-                .map(this::mapToDto)
+                .map(mapper::mapToDTO)
                 .orElseThrow(); //todo throw exception
     }
 
@@ -41,18 +41,9 @@ public class DefaultBaseService<DTO extends BaseEntityDTO<ID>,
     @Transactional
     public void remove(ID id) {
         DTO byId = findById(id);
-        ENTITY entity = mapToEntity(byId);
+        ENTITY entity = mapper.mapToEntity(byId);
         entity.setIsDeleted(true);
         repository.saveAndFlush(entity);
     }
 
-    @Override
-    public ENTITY mapToEntity(DTO value) {
-        return mapper.mapToEntity(value);
-    }
-
-    @Override
-    public DTO mapToDto(ENTITY value) {
-        return mapper.mapToDTO(value);
-    }
 }

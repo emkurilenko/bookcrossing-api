@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
-        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class},
+        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class, LocationMapper.class},
         unmappedTargetPolicy = IGNORE)
 public interface BookMapper extends BaseMapper<BookDTO, Book> {
 
