@@ -17,5 +17,6 @@ public class UrlConstants {
     public static final String TAKE_AWAY_BOOK_MAPPING = "/take-away";
     public static final String BOOK_HISTORY_REQUEST_MAPPING = "/book/history";
     public static final String BOOKED_REQUEST_MAPPING = "/booked";
+    public static final String CHANGE_PASSWORD_REQUEST_MAPPING = "/change-password";
 
 }

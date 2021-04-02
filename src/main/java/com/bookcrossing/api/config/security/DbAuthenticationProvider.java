@@ -1,6 +1,6 @@
 package com.bookcrossing.api.config.security;
 
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.service.impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;

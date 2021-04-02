@@ -3,7 +3,7 @@ package com.bookcrossing.api.service.facade;
 import static com.bookcrossing.api.domain.entity.BookStatus.AVAILABLE;
 
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.service.BaseService;

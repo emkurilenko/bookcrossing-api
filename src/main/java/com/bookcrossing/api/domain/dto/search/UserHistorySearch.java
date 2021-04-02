@@ -1,6 +1,6 @@
 package com.bookcrossing.api.domain.dto.search;
 
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

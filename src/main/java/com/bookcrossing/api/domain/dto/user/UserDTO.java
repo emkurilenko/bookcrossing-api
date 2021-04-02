@@ -1,5 +1,7 @@
-package com.bookcrossing.api.domain.dto;
+package com.bookcrossing.api.domain.dto.user;
 
+import com.bookcrossing.api.domain.dto.BaseDTO;
+import com.bookcrossing.api.domain.dto.BaseEntityDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,5 +22,6 @@ public class UserDTO extends BaseEntityDTO<Long> implements BaseDTO<Long> {
     private String lastName;
     private String hobbies;
     private UUID photo;
+    @JsonIgnore
     private String role = "USER";
 }

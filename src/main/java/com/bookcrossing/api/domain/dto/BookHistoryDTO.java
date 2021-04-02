@@ -1,6 +1,7 @@
 package com.bookcrossing.api.domain.dto;
 
 import com.bookcrossing.api.domain.dto.book.BookDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

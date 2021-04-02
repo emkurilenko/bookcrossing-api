@@ -3,7 +3,7 @@ package com.bookcrossing.api.utils;
 import static java.util.Optional.ofNullable;
 
 import com.bookcrossing.api.config.security.BookCrossingUserDetails;
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

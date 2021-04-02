@@ -2,7 +2,7 @@ package com.bookcrossing.api.validator;
 
 import static com.bookcrossing.api.validator.ValidatorType.UNIQUE_USER;
 
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.repository.UserRepository;
 import com.bookcrossing.api.exception.ValidationException;
 

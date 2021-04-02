@@ -7,12 +7,11 @@ import static com.bookcrossing.api.domain.entity.BookStatus.TAKEN_AWAY;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKE_AWAY;
 import static com.bookcrossing.api.validator.ValidatorType.BOOK_BOOKING;
 
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookHistory;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.domain.repository.BookHistoryRepository;
 import com.bookcrossing.api.exception.ValidationException;
-import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.utils.AuthUtils;
 
 import java.util.List;

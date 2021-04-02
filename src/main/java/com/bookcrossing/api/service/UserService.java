@@ -1,7 +1,7 @@
 package com.bookcrossing.api.service;
 
-import com.bookcrossing.api.domain.dto.UserDTO;
-import com.bookcrossing.api.domain.entity.User;
+import com.bookcrossing.api.domain.dto.user.ChangePasswordRequest;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 
 public interface UserService extends BaseService<UserDTO, Long> {
 
@@ -12,4 +12,6 @@ public interface UserService extends BaseService<UserDTO, Long> {
     UserDTO registerNewUser(UserDTO user);
 
     UserDTO getCurrentUser();
+
+    UserDTO changePassword(ChangePasswordRequest changePasswordRequest);
 }

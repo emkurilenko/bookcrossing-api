@@ -7,7 +7,7 @@ import static com.bookcrossing.api.domain.entity.BookStatus.TAKE_AWAY;
 
 import com.bookcrossing.api.config.dispatcher.Dispatcher;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
-import com.bookcrossing.api.domain.dto.UserDTO;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.entity.BookStatus;

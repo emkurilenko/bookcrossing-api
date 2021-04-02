@@ -4,5 +4,7 @@ public enum ValidatorType {
     UNIQUE_USER,
     BOOK_BOOKING,
     BOOK_CODE,
-    LOGIN_USER
+    LOGIN_USER,
+    CHANGE_PASSWORD,
+    USER_DATA
 }
