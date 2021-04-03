@@ -43,6 +43,7 @@ public class FileController {
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public BaseEntityDTO<UUID> uploadFile(@RequestPart("file") MultipartFile file) {
         FileDTO value = fileUtils.convert(file);
+        value.setId(UUID.randomUUID());
         FileDTO persistFile = fileBaseService.persist(value);
         BaseEntityDTO<UUID> baseEntityDTO = new BaseEntityDTO<>();
         baseEntityDTO.setId(persistFile.getId());
