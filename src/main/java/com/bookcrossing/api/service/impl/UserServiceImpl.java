@@ -84,7 +84,7 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
         user.setRole(BASE_USER_ROLE);
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
-        UserDTO persisted = this.persist(user);
+        UserDTO persisted = super.persist(user);
         persisted.setPassword(null);
         return persisted;
     }
