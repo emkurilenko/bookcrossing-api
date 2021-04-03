@@ -16,7 +16,7 @@ import javax.persistence.MappedSuperclass;
 public class BookCrossingBaseEntity<ID extends Serializable> implements BaseEntity<ID> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private ID id;
 
     @Column(name = "is_deleted")
