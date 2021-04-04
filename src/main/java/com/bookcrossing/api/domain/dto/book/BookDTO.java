@@ -5,6 +5,7 @@ import com.bookcrossing.api.domain.dto.BaseNamedEntityDTO;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.GenreDTO;
 import com.bookcrossing.api.domain.dto.LocationDTO;
+import com.bookcrossing.api.domain.entity.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class BookDTO extends BaseNamedEntityDTO<Long> {
 
     private String code;
+
+    private BookStatus status;
 
     private List<AuthorDTO> authors;
 

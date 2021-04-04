@@ -7,5 +7,6 @@ public enum BookStatus {
     CANCELED,
     BOOKED,
     TAKE_AWAY,
-    TAKEN_AWAY //for current user
+    TAKEN_AWAY, //for current user
+    UNKNOWN
 }
