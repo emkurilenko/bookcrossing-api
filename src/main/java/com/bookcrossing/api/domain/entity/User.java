@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -19,6 +20,7 @@ public class User extends BookCrossingBaseEntity<Long> {
     private String login;
 
     private String password;
+
     private String email;
 
     private String firstName;
@@ -26,6 +28,10 @@ public class User extends BookCrossingBaseEntity<Long> {
     private String lastName;
 
     private String hobbies;
+
+    private LocalDate dateOfBirth;
+
+    private Gender gender;
 
     @OneToOne
     @JoinColumn(name = "photo_id", referencedColumnName = "id")

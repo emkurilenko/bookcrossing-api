@@ -32,7 +32,7 @@ public class BookHistoryController {
     }
 
     @GetMapping(BOOKED_REQUEST_MAPPING)
-    public List<BookDTO> getUserBookedHistory(BookSearch search) {
+    public List<BookHistoryDTO> getUserBookedHistory(BookSearch search) {
         return bookHistoryService.getUserBookedHistory(search);
     }
 }

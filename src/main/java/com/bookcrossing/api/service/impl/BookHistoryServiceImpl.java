@@ -118,7 +118,7 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
     @Override
     @Transactional(readOnly = true)
     public List<BookDTO> getUserHistory(BookSearch bookSearch) {
-        return getBookHistory(
+        List<BookHistoryDTO> bookHistory = getBookHistory(
                 bookSearch,
                 List.of(
                         BookStatus.AVAILABLE,
@@ -126,16 +126,24 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
                         BookStatus.TAKEN_AWAY,
                         BookStatus.RESERVED,
                         BookStatus.CANCELED));
+
+        return bookHistory.stream()
+                .map(item -> {
+                    BookDTO book = item.getBook();
+                    book.setStatus(item.getStatus());
+                    return book;
+                })
+                .collect(Collectors.toList());
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookDTO> getUserBookedHistory(BookSearch bookSearch) {
+    public List<BookHistoryDTO> getUserBookedHistory(BookSearch bookSearch) {
         return getBookHistory(bookSearch, List.of(BookStatus.BOOKED));
     }
 
-    private List<BookDTO> getBookHistory(BookSearch bookSearch, List<BookStatus> statuses) {
+    private List<BookHistoryDTO> getBookHistory(BookSearch bookSearch, List<BookStatus> statuses) {
         UserDTO currentUser = userService.getCurrentUser();
 
         UserHistorySearch userHistorySearch = UserHistorySearch.builder()
@@ -144,15 +152,6 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
                 .statuses(statuses)
                 .build();
 
-        List<BookHistoryDTO> historyDTOS = userHistorySearchSearchService.search(userHistorySearch);
-
-        return historyDTOS.stream()
-                .map(item -> {
-                    BookStatus status = item.getStatus();
-                    BookDTO book = item.getBook();
-                    book.setStatus(status);
-                    return book;
-                })
-                .collect(Collectors.toList());
+        return userHistorySearchSearchService.search(userHistorySearch);
     }
 }

@@ -25,5 +25,5 @@ public interface BookHistoryService extends BaseService<BookHistoryDTO, Long> {
 
     List<BookDTO> getUserHistory(BookSearch bookSearch);
 
-    List<BookDTO> getUserBookedHistory(BookSearch bookSearch);
+    List<BookHistoryDTO> getUserBookedHistory(BookSearch bookSearch);
 }
