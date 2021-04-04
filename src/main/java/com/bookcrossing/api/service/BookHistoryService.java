@@ -2,6 +2,7 @@ package com.bookcrossing.api.service;
 
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.BookUserHistoryDTO;
+import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.domain.entity.BookHistory;
 import com.bookcrossing.api.domain.entity.BookStatus;
@@ -22,7 +23,7 @@ public interface BookHistoryService extends BaseService<BookHistoryDTO, Long> {
 
     List<BookHistoryDTO> findByBookId(Long bookId);
 
-    List<BookHistoryDTO> getUserHistory(BookSearch bookSearch);
+    List<BookDTO> getUserHistory(BookSearch bookSearch);
 
-    List<BookHistoryDTO> getUserBookedHistory(BookSearch bookSearch);
+    List<BookDTO> getUserBookedHistory(BookSearch bookSearch);
 }

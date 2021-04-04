@@ -4,6 +4,7 @@ import static com.bookcrossing.api.controller.UrlConstants.BOOKED_REQUEST_MAPPIN
 import static com.bookcrossing.api.controller.UrlConstants.BOOK_HISTORY_REQUEST_MAPPING;
 
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
+import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.service.BookHistoryService;
 
@@ -26,12 +27,12 @@ public class BookHistoryController {
     }
 
     @GetMapping
-    public List<BookHistoryDTO> getUserHistory(BookSearch search) {
+    public List<BookDTO> getUserHistory(BookSearch search) {
         return bookHistoryService.getUserHistory(search);
     }
 
     @GetMapping(BOOKED_REQUEST_MAPPING)
-    public List<BookHistoryDTO> getUserBookedHistory(BookSearch search) {
+    public List<BookDTO> getUserBookedHistory(BookSearch search) {
         return bookHistoryService.getUserBookedHistory(search);
     }
 }
