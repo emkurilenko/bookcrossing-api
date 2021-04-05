@@ -2,10 +2,10 @@ package com.bookcrossing.api.service.impl;
 
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
 import com.bookcrossing.api.domain.dto.BookUserHistoryDTO;
-import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.domain.dto.search.UserHistorySearch;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookHistory;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.domain.entity.QBookHistory;
@@ -153,5 +153,17 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
                 .build();
 
         return userHistorySearchSearchService.search(userHistorySearch);
+    }
+
+    @Override
+    @Transactional
+    public BookHistoryDTO persist(BookHistoryDTO value) {
+        BookHistory bookHistory = mapper.mapToEntity(value);
+        BookHistory persistedBookHistory = bookHistoryRepository.saveAndFlush(bookHistory);
+        persistedBookHistory
+                .getBook()
+                .setBookHistories(List.of(persistedBookHistory)); //todo hotfix
+
+        return mapper.mapToDTO(persistedBookHistory);
     }
 }

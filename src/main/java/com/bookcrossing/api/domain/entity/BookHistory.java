@@ -5,11 +5,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,6 +26,7 @@ public class BookHistory extends BookCrossingBaseEntity<Long> {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     @Enumerated(EnumType.STRING)

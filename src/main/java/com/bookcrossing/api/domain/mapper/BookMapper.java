@@ -1,6 +1,5 @@
 package com.bookcrossing.api.domain.mapper;
 
-import static org.mapstruct.NullValueMappingStrategy.RETURN_DEFAULT;
 import static org.mapstruct.ReportingPolicy.IGNORE;
 
 import com.bookcrossing.api.domain.dto.book.BookDTO;
@@ -23,8 +22,8 @@ public interface BookMapper extends BaseMapper<BookDTO, Book> {
     List<BookStatus> ignoreStatuses = List.of(BookStatus.CANCELED);
 
     @Override
-    @Mapping(target = "bookHistories", ignore = true)
     @Mapping(target = "status", source = "book.bookHistories", qualifiedByName = "getLastStatus")
+    @Mapping(target = "bookHistories", ignore = true)
     BookDTO mapToDTO(Book book);
 
     @Named("getLastStatus")
