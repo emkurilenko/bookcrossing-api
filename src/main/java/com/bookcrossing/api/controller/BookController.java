@@ -57,8 +57,13 @@ public class BookController extends AbstractSearchController<BookDTO, Long, Book
         return bookBookingFacade.takeAwayBook(fetchBook);
     }
 
-//    @PutMapping("/{bookId}/undo")
-//    public BookDTO undoAvailabilityBook(@PathVariable Long bookId) {
-//        return bookBookingFacade.undoAvailabilityBook(bookId);
-//    }
+    @PostMapping("/{bookId}/cancel")
+    public BookHistoryDTO cancelBooking(@PathVariable Long bookId) {
+        return bookBookingFacade.cancelBooking(bookId);
+    }
+
+    @PostMapping("/{bookId}/set-available")
+    public BookHistoryDTO setAvailableBook(@PathVariable Long bookId) {
+        return bookBookingFacade.setAvailableBook(bookId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.bookcrossing.api.service.facade;
 
 import static com.bookcrossing.api.domain.entity.BookStatus.AVAILABLE;
+import static com.bookcrossing.api.domain.entity.BookStatus.CANCELED;
 import static com.bookcrossing.api.domain.entity.BookStatus.RESERVED;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKEN_AWAY;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKE_AWAY;
@@ -104,4 +105,39 @@ public class BookBookingFacade {
         return bookHistoryService.persist(userHistory);
     }
 
+    @Transactional
+    public BookHistoryDTO cancelBooking(Long bookId) {
+        UserDTO currentUser = userService.getCurrentUser();
+        BookHistoryDTO bookedBook = bookHistoryService.findByBookIdAndUserId(
+                bookId,
+                currentUser.getId());
+
+        BookHistoryDTO reservedBook = bookHistoryService.findByBookIdAndStatuses(
+                bookId,
+                List.of(RESERVED));
+
+        reservedBook.setStatus(AVAILABLE);
+        bookHistoryService.persist(reservedBook);
+
+        bookedBook.setStatus(CANCELED);
+        return bookHistoryService.persist(bookedBook);
+    }
+
+    @Transactional
+    public BookHistoryDTO setAvailableBook(Long bookId) {
+        //TODO add validator
+
+        UserDTO currentUser = userService.getCurrentUser();
+        BookHistoryDTO bookHistoryUser = bookHistoryService.findByBookIdAndUserId(
+                bookId,
+                currentUser.getId());
+        if (bookHistoryUser.getStatus() != TAKE_AWAY) {
+            throw new IllegalStateException(String.format(
+                    "the.book.is.not.in.status: %s",
+                    TAKE_AWAY)); //todo move to validator
+        }
+
+        bookHistoryUser.setStatus(AVAILABLE);
+        return bookHistoryService.persist(bookHistoryUser);
+    }
 }
