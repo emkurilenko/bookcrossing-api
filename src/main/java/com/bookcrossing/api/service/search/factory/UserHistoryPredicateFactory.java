@@ -29,7 +29,8 @@ public class UserHistoryPredicateFactory implements PredicateFactory<UserHistory
         String genre = bookSearch.getGenre();
 
         BooleanExpression bb = QBH.user.id.eq(userId)
-                .and(QBH.status.in(search.getStatuses()));
+                .and(QBH.status.in(search.getStatuses()))
+                .and(QBH.book.isDeleted.eq(Boolean.FALSE));
 
         if (StringUtils.hasText(name)) {
             bb.and(QBH.book.name.containsIgnoreCase(name));
