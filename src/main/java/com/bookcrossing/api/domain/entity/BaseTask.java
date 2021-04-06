@@ -23,7 +23,7 @@ public class BaseTask extends BaseNamedEntity<Long> {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column("created_date")
+    @Column(name = "created_date")
     private ZonedDateTime createdDate;
 
     private String description;
