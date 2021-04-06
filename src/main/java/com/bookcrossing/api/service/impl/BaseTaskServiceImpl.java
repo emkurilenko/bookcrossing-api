@@ -8,6 +8,8 @@ import com.bookcrossing.api.domain.repository.BaseCrudRepository;
 import com.bookcrossing.api.job.JobType;
 import com.bookcrossing.api.service.BaseTaskService;
 
+import java.time.ZonedDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class BaseTaskServiceImpl extends DefaultBaseService<BaseTaskDTO, BaseTas
         BaseTaskDTO baseTask = BaseTaskDTO.builder()
                 .name(job.name())
                 .status(Status.RUNNING)
+                .createdDate(ZonedDateTime.now())
                 .build();
         return persist(baseTask);
     }

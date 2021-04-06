@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.ZonedDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +22,9 @@ public class BaseTask extends BaseNamedEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column("created_date")
+    private ZonedDateTime createdDate;
 
     private String description;
 

@@ -22,10 +22,15 @@ public abstract class DefaultJob implements Job {
             Status status = this.toExecute() ? Status.FINISHED : Status.FAILED;
             task.setStatus(status);
         } catch (Exception e) {
-            task.setDescription(e.getMessage());
+            log.error("BaseTask: {}, error: ",this.jobName(), e);
+            task.setDescription(e.getLocalizedMessage());
             task.setStatus(Status.FAILED);
         }
         BaseTaskDTO persist = baseTaskService.persist(task);
-        log.info("Job: {} finished with status: {}", this.jobName(), persist.getStatus());
+        log.info(
+                "Job: {} finished with status: {}, descr: {}",
+                this.jobName(),
+                persist.getStatus(),
+                persist.getDescription());
     }
 }

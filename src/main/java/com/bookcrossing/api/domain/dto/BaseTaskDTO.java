@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.ZonedDateTime;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
@@ -19,4 +21,6 @@ public class BaseTaskDTO extends BaseNamedEntityDTO<Long> {
     private BaseTask.Status status;
 
     private String description;
+
+    private ZonedDateTime createdDate;
 }
