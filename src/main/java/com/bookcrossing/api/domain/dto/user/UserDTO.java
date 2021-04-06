@@ -28,4 +28,5 @@ public class UserDTO extends BaseEntityDTO<Long> implements BaseDTO<Long> {
     private String role = "USER";
     private LocalDate dateOfBirth;
     private Gender gender;
+    private Double rate;
 }

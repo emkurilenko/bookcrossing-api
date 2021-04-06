@@ -15,4 +15,5 @@ public class TakeAwayBookReq {
     private String code;
     @JsonIgnore
     private Long userId;
+    private Double rate;
 }

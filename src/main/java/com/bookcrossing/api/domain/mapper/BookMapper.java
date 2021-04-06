@@ -1,5 +1,6 @@
 package com.bookcrossing.api.domain.mapper;
 
+import static java.util.Optional.ofNullable;
 import static org.mapstruct.ReportingPolicy.IGNORE;
 
 import com.bookcrossing.api.domain.dto.book.BookDTO;
@@ -28,7 +29,9 @@ public interface BookMapper extends BaseMapper<BookDTO, Book> {
 
     @Named("getLastStatus")
     default BookStatus getLastStatus(List<BookHistory> histories) {
-        return histories.stream()
+        return ofNullable(histories)
+                .orElseGet(List::of)
+                .stream()
                 .filter(item -> !ignoreStatuses.contains(item.getStatus()))
                 .max(Comparator.comparing(BookHistory::getCreatedDate))
                 .map(BookHistory::getStatus)

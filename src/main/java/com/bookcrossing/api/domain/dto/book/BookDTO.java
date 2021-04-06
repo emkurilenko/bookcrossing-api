@@ -35,4 +35,6 @@ public class BookDTO extends BaseNamedEntityDTO<Long> {
 
     @JsonIgnore
     private List<BookHistoryDTO> bookHistories;
+
+    private Double rate;
 }
