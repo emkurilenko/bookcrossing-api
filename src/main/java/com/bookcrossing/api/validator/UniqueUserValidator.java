@@ -28,13 +28,13 @@ public class UniqueUserValidator implements Validator<UserDTO> {
                     "login",
                     value.getLogin());
         }
-        boolean existsByEmail = userRepository.existsByEmail(value.getEmail());
-        if (existsByEmail) {
-            throw new ValidationException(
-                    "user",
-                    "email",
-                    value.getEmail());
-        }
+//        boolean existsByEmail = userRepository.existsByEmail(value.getEmail());
+//        if (existsByEmail) {
+//            throw new ValidationException(
+//                    "user",
+//                    "email",
+//                    value.getEmail());
+//        }
     }
 
     @Override

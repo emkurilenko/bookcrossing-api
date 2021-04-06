@@ -12,7 +12,6 @@ import com.bookcrossing.api.domain.repository.UserRepository;
 import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.utils.AuthUtils;
 import com.bookcrossing.api.validator.MiddlewareValidator;
-import com.bookcrossing.api.validator.ValidatorType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -106,6 +105,7 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
     }
 
     @Override
+    @Transactional
     public UserDTO persist(UserDTO value) {
         middlewareValidator.validate(value, List.of(USER_DATA));
 
@@ -114,6 +114,10 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
         currentUser.setLastName(value.getLastName());
         currentUser.setHobbies(value.getHobbies());
         currentUser.setEmail(value.getEmail());
+        currentUser.setPhoto(value.getPhoto());
+        currentUser.setDateOfBirth(value.getDateOfBirth());
+        currentUser.setGender(value.getGender());
+        currentUser.setRate(value.getRate());
         currentUser.setPhoto(value.getPhoto());
         return super.persist(currentUser);
     }
