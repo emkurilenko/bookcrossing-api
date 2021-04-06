@@ -5,13 +5,16 @@ import static com.bookcrossing.api.domain.entity.BookStatus.CANCELED;
 import static com.bookcrossing.api.domain.entity.BookStatus.RESERVED;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKEN_AWAY;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKE_AWAY;
+import static java.util.Optional.ofNullable;
 
 import com.bookcrossing.api.config.dispatcher.Dispatcher;
+import com.bookcrossing.api.domain.dto.BaseEntityDTO;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
-import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
+import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookStatus;
+import com.bookcrossing.api.exception.NotFoundException;
 import com.bookcrossing.api.service.BookHistoryService;
 import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.validator.Validator;
@@ -54,6 +57,10 @@ public class BookBookingFacade {
         BookDTO bookDTO = availableBook.getBook();
         UserDTO userDTO = userService.getCurrentUser();
 
+        BookHistoryDTO previousHistory = bookHistoryService.findByBookIdAndUserId(
+                bookId,
+                userDTO.getId());
+
         ZonedDateTime createdDate = ZonedDateTime.now();
 
         BookHistoryDTO history = BookHistoryDTO.builder()
@@ -62,6 +69,10 @@ public class BookBookingFacade {
                 .status(BookStatus.BOOKED)
                 .createdDate(createdDate)
                 .build();
+
+        ofNullable(previousHistory)
+                .map(BaseEntityDTO::getId)
+                .ifPresent(history::setId);
 
         availableBook.setStatus(BookStatus.RESERVED);
         bookHistoryService.persist(availableBook);
@@ -116,6 +127,10 @@ public class BookBookingFacade {
                 bookId,
                 List.of(RESERVED));
 
+        if (reservedBook == null) {
+            throw new NotFoundException("not.found.reserved.book.in.history", "book", bookId);
+        }
+
         reservedBook.setStatus(AVAILABLE);
         bookHistoryService.persist(reservedBook);
 
@@ -138,6 +153,7 @@ public class BookBookingFacade {
         }
 
         bookHistoryUser.setStatus(AVAILABLE);
+        bookHistoryUser.getBook().setBookHistories(List.of(bookHistoryUser)); //todo hotfix
         return bookHistoryService.persist(bookHistoryUser);
     }
 }
