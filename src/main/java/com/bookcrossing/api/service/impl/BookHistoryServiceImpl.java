@@ -90,22 +90,6 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
     }
 
     @Override
-    @Transactional
-    public BookHistoryDTO cancelBookBooking(BookHistoryDTO history) {
-        history.setStatus(BookStatus.CANCELED);
-        BookDTO book = history.getBook();
-
-        BookHistory bookedBook = bookHistoryRepository.findOne(QBH.book.id.eq(book.getId())
-                .and(QBH.status.eq(BookStatus.RESERVED)))
-                .orElseThrow(() -> new IllegalStateException("not.found.reserved.book"));
-
-        bookedBook.setStatus(BookStatus.AVAILABLE);
-
-        bookHistoryRepository.save(bookedBook);
-        return persist(history);
-    }
-
-    @Override
     public List<BookHistoryDTO> findByBookId(Long bookId) {
         return bookHistoryRepository.findAllByBookId(bookId)
                 .stream()
