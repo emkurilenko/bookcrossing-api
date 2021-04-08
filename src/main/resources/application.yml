@@ -15,3 +15,7 @@ spring:
     url: jdbc:postgresql://${SPRING_DATASOURCE_URL:localhost:5432}/${POSTGRES_DB_NAME:bookcrossing_api}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+logging:
+  level:
+    org.springframework.web: TRACE
