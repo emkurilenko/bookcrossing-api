@@ -11,12 +11,9 @@ import com.bookcrossing.api.domain.dto.search.BookSearch;
 import com.bookcrossing.api.service.BaseService;
 import com.bookcrossing.api.service.facade.BookBookingFacade;
 import com.bookcrossing.api.service.facade.BookFacade;
-import com.bookcrossing.api.service.search.SearchService;
-
-import java.util.List;
+import com.bookcrossing.api.service.search.wrapper.BookAvailableSearchWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +30,7 @@ public class BookController extends AbstractSearchController<BookDTO, Long, Book
     @Autowired
     public BookController(
             final BaseService<BookDTO, Long> bookService,
-            final SearchService<BookSearch, List<BookDTO>> searchService,
+            final BookAvailableSearchWrapper searchService,
             final BookBookingFacade bookBookingFacade,
             final BookFacade bookFacade) {
         super(bookService, searchService);

@@ -1,6 +1,7 @@
 package com.bookcrossing.api.service.facade;
 
 import static com.bookcrossing.api.domain.entity.BookStatus.AVAILABLE;
+import static com.bookcrossing.api.domain.entity.BookStatus.BOOKED;
 import static com.bookcrossing.api.domain.entity.BookStatus.CANCELED;
 import static com.bookcrossing.api.domain.entity.BookStatus.RESERVED;
 import static com.bookcrossing.api.domain.entity.BookStatus.TAKEN_AWAY;
@@ -66,7 +67,7 @@ public class BookBookingFacade {
         BookHistoryDTO history = BookHistoryDTO.builder()
                 .user(userDTO)
                 .book(bookDTO)
-                .status(BookStatus.BOOKED)
+                .status(BOOKED)
                 .createdDate(createdDate)
                 .build();
 
@@ -153,7 +154,6 @@ public class BookBookingFacade {
         }
 
         bookHistoryUser.setStatus(AVAILABLE);
-        bookHistoryUser.getBook().setBookHistories(List.of(bookHistoryUser)); //todo hotfix
         return bookHistoryService.persist(bookHistoryUser);
     }
 }
