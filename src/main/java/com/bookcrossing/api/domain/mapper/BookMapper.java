@@ -9,25 +9,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
-        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class, LocationMapper.class,
-                BookStatusMapper.class},
+        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class, LocationMapper.class},
         unmappedTargetPolicy = IGNORE)
 public interface BookMapper extends BaseMapper<BookDTO, Book> {
 
-
     @Override
-    @Mapping(target = "status", source = "book", qualifiedByName = "getLastStatus")
     @Mapping(target = "bookHistories", ignore = true)
     BookDTO mapToDTO(Book book);
 
-//    @Named("getLastStatus")
-//    default BookStatus getLastStatus(List<BookHistory> histories) {
-//        return ofNullable(histories)
-//                .orElseGet(List::of)
-//                .stream()
-//                .filter(item -> !ignoreStatuses.contains(item.getStatus()))
-//                .max(Comparator.comparing(BookHistory::getCreatedDate))
-//                .map(BookHistory::getStatus)
-//                .orElse(BookStatus.UNKNOWN);
-//    }
+    @Override
+    @Mapping(target = "isDeleted", ignore = true)
+    @Mapping(target = "bookHistories", ignore = true)
+    @Mapping(target = "updateAt", defaultExpression = "java(java.time.ZonedDateTime.now())")
+    Book mapToEntity(BookDTO bookDTO);
 }
