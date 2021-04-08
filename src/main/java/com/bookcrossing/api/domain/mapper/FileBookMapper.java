@@ -15,13 +15,17 @@ import org.mapstruct.Mapper;
 public interface FileBookMapper {
 
     default List<UUID> mapIds(List<File> files) {
-        return files.stream()
+        return ofNullable(files)
+                .orElseGet(List::of)
+                .stream()
                 .map(BookCrossingBaseEntity::getId)
                 .collect(Collectors.toList());
     }
 
     default List<File> mapFiles(List<UUID> ids) {
-        return ids.stream()
+        return ofNullable(ids)
+                .orElseGet(List::of)
+                .stream()
                 .map(id -> {
                     File file = new File();
                     file.setId(id);
