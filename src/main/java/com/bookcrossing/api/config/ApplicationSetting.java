@@ -29,6 +29,7 @@ public class ApplicationSetting {
             "/file/**",
             "/file",
             "/**/search",
-            "/location/**/books"
+            "/location/**/books",
+            "/bug-report"
     };
 }
