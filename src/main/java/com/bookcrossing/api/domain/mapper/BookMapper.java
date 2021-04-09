@@ -9,12 +9,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
-        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class, LocationMapper.class},
+        uses = {AuthorMapper.class, GenreMapper.class, FileBookMapper.class, LocationMapper.class,
+                BookRateMapper.class},
         unmappedTargetPolicy = IGNORE)
 public interface BookMapper extends BaseMapper<BookDTO, Book> {
 
     @Override
     @Mapping(target = "bookHistories", ignore = true)
+    @Mapping(target = "rate", source = "book.id", qualifiedByName = "getBookRating")
     BookDTO mapToDTO(Book book);
 
     @Override

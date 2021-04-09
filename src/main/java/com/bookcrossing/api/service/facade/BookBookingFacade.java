@@ -11,12 +11,14 @@ import static java.util.Optional.ofNullable;
 import com.bookcrossing.api.config.dispatcher.Dispatcher;
 import com.bookcrossing.api.domain.dto.BaseEntityDTO;
 import com.bookcrossing.api.domain.dto.BookHistoryDTO;
+import com.bookcrossing.api.domain.dto.BookRatingDTO;
 import com.bookcrossing.api.domain.dto.book.BookDTO;
 import com.bookcrossing.api.domain.dto.book.TakeAwayBookReq;
 import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.BookStatus;
 import com.bookcrossing.api.exception.NotFoundException;
 import com.bookcrossing.api.service.BookHistoryService;
+import com.bookcrossing.api.service.BookRatingService;
 import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.validator.Validator;
 import com.bookcrossing.api.validator.ValidatorType;
@@ -34,15 +36,18 @@ public class BookBookingFacade {
     private final Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher;
     private final BookHistoryService bookHistoryService;
     private final UserService userService;
+    private final BookRatingService bookRatingService;
 
     @Autowired
     public BookBookingFacade(
             Dispatcher<ValidatorType, Validator<Object>> validatorDispatcher,
             BookHistoryService bookHistoryService,
-            UserService userService) {
+            UserService userService,
+            BookRatingService bookRatingService) {
         this.validatorDispatcher = validatorDispatcher;
         this.bookHistoryService = bookHistoryService;
         this.userService = userService;
+        this.bookRatingService = bookRatingService;
     }
 
     @Transactional
@@ -113,6 +118,16 @@ public class BookBookingFacade {
             userHistory.setStatus(TAKE_AWAY);
         }
         bookHistoryService.persist(availableOrReservedHistory);
+
+        BookRatingDTO bookRatingDTO = BookRatingDTO.builder()
+                .bookId(bookId)
+                .createdDate(ZonedDateTime.now())
+                .rate(takeAwayBookReq.getRate())
+                .ownerId(availableOrReservedHistory.getUser().getId())
+                .userId(userDTO.getId())
+                .build();
+
+        bookRatingService.persist(bookRatingDTO);
 
         return bookHistoryService.persist(userHistory);
     }

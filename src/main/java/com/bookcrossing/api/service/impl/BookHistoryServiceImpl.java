@@ -71,7 +71,7 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
         return bookHistoryRepository.findOne(QBH.user.id.eq(userId)
                 .and(QBH.book.id.eq(bookId)))
                 .map(mapper::mapToDTO)
-                .orElse(null);
+                .orElse(null); //todo thow excepton
     }
 
     @Override

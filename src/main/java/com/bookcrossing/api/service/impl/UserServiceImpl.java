@@ -9,6 +9,7 @@ import com.bookcrossing.api.domain.dto.user.UserDTO;
 import com.bookcrossing.api.domain.entity.User;
 import com.bookcrossing.api.domain.mapper.BaseMapper;
 import com.bookcrossing.api.domain.repository.UserRepository;
+import com.bookcrossing.api.service.BookRatingService;
 import com.bookcrossing.api.service.UserService;
 import com.bookcrossing.api.utils.AuthUtils;
 import com.bookcrossing.api.validator.MiddlewareValidator;
@@ -16,6 +17,7 @@ import com.bookcrossing.api.validator.MiddlewareValidator;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,19 +38,23 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
     private final PasswordEncoder passwordEncoder;
     private final AuthUtils authUtils;
     private final MiddlewareValidator middlewareValidator;
+    private final BookRatingService bookRatingService;
 
+    @Autowired
     public UserServiceImpl(
             BaseMapper<UserDTO, User> mapper,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             AuthUtils authUtils,
-            MiddlewareValidator middlewareValidator) {
+            MiddlewareValidator middlewareValidator,
+            BookRatingService bookRatingService) {
         super(mapper, userRepository);
         this.mapper = mapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authUtils = authUtils;
         this.middlewareValidator = middlewareValidator;
+        this.bookRatingService = bookRatingService;
     }
 
     @Override
@@ -90,7 +96,10 @@ public class UserServiceImpl extends DefaultBaseService<UserDTO, User, Long> imp
 
     @Override
     public UserDTO getCurrentUser() {
-        return authUtils.getCurrentUser();
+        UserDTO currentUser = authUtils.getCurrentUser();
+        Double rating = bookRatingService.getUserRating(currentUser.getId());
+        currentUser.setRate(rating);
+        return currentUser;
     }
 
     @Override
