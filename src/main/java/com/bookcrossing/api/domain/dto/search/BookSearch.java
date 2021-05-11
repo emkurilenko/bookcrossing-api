@@ -1,6 +1,5 @@
 package com.bookcrossing.api.domain.dto.search;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class BookSearch extends BaseNamedSearch {
-    private String author;
-    private String genre;
+    private List<Long> authors;
+    private List<Long> genres;
     private List<Long> locationIds;
 }

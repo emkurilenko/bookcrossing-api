@@ -9,6 +9,8 @@ import com.bookcrossing.api.domain.entity.QBookHistory;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -25,8 +27,8 @@ public class UserHistoryPredicateFactory implements PredicateFactory<UserHistory
 
         BookSearch bookSearch = search.getBookSearch();
         String name = bookSearch.getName();
-        String author = bookSearch.getAuthor();
-        String genre = bookSearch.getGenre();
+        List<Long> authors = bookSearch.getAuthors();
+        List<Long> genres = bookSearch.getGenres();
 
         BooleanExpression bb = QBH.user.id.eq(userId)
                 .and(QBH.status.in(search.getStatuses()))
@@ -35,11 +37,11 @@ public class UserHistoryPredicateFactory implements PredicateFactory<UserHistory
         if (StringUtils.hasText(name)) {
             bb.and(QBH.book.name.containsIgnoreCase(name));
         }
-        if (StringUtils.hasText(author)) {
-            bb.and(QBH.book.authors.any().name.containsIgnoreCase(author));
+        if (authors != null && !authors.isEmpty()) {
+            bb.and(QBH.book.authors.any().id.in(authors));
         }
-        if (StringUtils.hasText(genre)) {
-            bb.and(QBH.book.genres.any().name.containsIgnoreCase(genre));
+        if (genres != null && !genres.isEmpty()) {
+            bb.and(QBH.book.genres.any().id.in(genres));
         }
         return bb;
     }
