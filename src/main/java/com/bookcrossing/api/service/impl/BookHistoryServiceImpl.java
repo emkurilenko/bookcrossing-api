@@ -124,7 +124,14 @@ public class BookHistoryServiceImpl extends DefaultBaseService<BookHistoryDTO, B
     @Override
     @Transactional(readOnly = true)
     public List<BookHistoryDTO> getUserBookedHistory(BookSearch bookSearch) {
-        return getBookHistory(bookSearch, List.of(BookStatus.BOOKED));
+        List<BookHistoryDTO> bookHistory = getBookHistory(bookSearch, List.of(BookStatus.BOOKED));
+        return bookHistory.stream()
+                .peek(item -> {
+                    BookDTO book = item.getBook();
+                    book.setStatus(item.getStatus());
+                    item.setBook(book);
+                })
+                .collect(Collectors.toList());
     }
 
     private List<BookHistoryDTO> getBookHistory(BookSearch bookSearch, List<BookStatus> statuses) {
