@@ -78,7 +78,7 @@ public class BookService extends DefaultBaseService<BookDTO, Book, Long> {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i <= 3; i++) {
-            int value = random.nextInt(999);
+            int value = random.nextInt(900) + 100;
             stringBuilder.append(value);
             if (i != 3) {
                 stringBuilder.append("-");
